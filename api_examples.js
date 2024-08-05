@@ -51,5 +51,17 @@ const runDemo = async () => {
         console.error('Error downloading file:', error.message);
     }
 
+    // Find permissions for this file
+    const fileCID = 'bafkreiebdtqimpnqwt5magb2xdxg3b3q5wisyene4ujo5o6p73c5d2jqka';
+
+    const accessRoutesResponse = await fetch(`https://cherty.io/api/access_routes/${fileCID}`, {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      });
+    const accessRoutes = await accessRoutesResponse.json();
+    console.log(accessRoutes);
+
+
 };
 runDemo();

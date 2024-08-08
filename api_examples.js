@@ -62,6 +62,36 @@ const runDemo = async () => {
     const accessRoutes = await accessRoutesResponse.json();
     console.log(accessRoutes);
 
+    // Get public info for a given id_cid
+    id_cid = 'bafkreictbqkffrjs4jklzrm3ijszkmz5rcx3malvc3jkkvgyv7unhq2ddi'
+    const publicAccountInfo_response = await fetch(`https://cherty.io/api/public_account_info/${id_cid}`, {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      });
+    const publicAccountInfo = await publicAccountInfo_response.json();
+    console.log(publicAccountInfo);
+
+    // Add permissions
+    const permissions_object = {
+        admins: [{"id": "113160473128016495295", "method": "google-oauth2"}],
+        viewers: ['bafkreictbqkffrjs4jklzrm3ijszkmz5rcx3malvc3jkkvgyv7unhq2ddi']
+    };
+
+    const editPermissionsData = {
+        cid: fileCID,
+        owner: id_cid,
+        permissions_object,
+        mode: 'add'
+      };
+    
+    const editPermissionsResponse = await axios.post(
+        `https://cherty.io/api/edit_permissions`, editPermissionsData, {
+            headers: {
+                Authorization: `Bearer ${API_KEY}`,
+            },
+        });
+    console.log(`Permissions response for CID ${fileCID}:`, editPermissionsResponse.data);
 
 };
 runDemo();
